@@ -69,7 +69,7 @@ Let's define the configuration model first. It can be nested at arbitrary depth.
 
 ```ts
 // config.ts
-import { Allow } from 'class-validator';
+import { Allow, ValidateNested } from 'class-validator';
 
 // validator is omitted for simplicity
 export class TableConfig {
@@ -79,13 +79,13 @@ export class TableConfig {
 
 export class DatabaseConfig {
   @Type(() => TableConfig)
-  @Allow()
+  @ValidateNested()
   public readonly table!: TableConfig;
 }
 
 export class RootConfig {
   @Type(() => DatabaseConfig)
-  @Allow()
+  @ValidateNested()
   public readonly database!: DatabaseConfig;
 }
 ```
@@ -202,6 +202,19 @@ export interface DotenvLoaderOptions {
    * ```
    */
   separator?: string;
+
+  /**
+   * If set, this function will transform all environment variable keys prior to parsing.
+   *
+   * Be aware: If you transform multiple keys to the same value only one will remain!
+   *
+   * @example
+   *
+   * .env file: `PORT=8080` and `keyTransformer: key => key.toLowerCase()` results in `{"port": 8080}`
+   *
+   * @param key environment variable key
+   */
+  keyTransformer?: (key: string) => string;
 
   /**
    * If "true", environment files (`.env`) will be ignored.
@@ -491,22 +504,31 @@ TypedConfigModule.forRoot({
 });
 ```
 
-## Uses of environment variable substitutions
+## Uses of variable substitutions
 
-The `${PORT}` substitution feature lets you use environment variable in some nice ways.
+The `${PORT}` substitution feature lets you use environment variable in some nice ways. You can also provide default values, and reference another variable in a config
 
 If you have config file with like the below one
 
 ```yaml
 database:
   host: 127.0.0.1
-  port: ${PORT}
+  port: ${PORT:-12345}
+  url: ${database.host}:${database:port}
 ```
 
 And you have set environment variable for port
 
 ```bash
 PORT=9000
+```
+
+And set ignoreEnvironmentVariableSubstitution to false in the FileLoaderOptions
+
+```
+load: fileLoader({
+  ignoreEnvironmentVariableSubstitution: false,
+}),
 ```
 
 then `fileloader` will resolve `${PORT}` placeholder and replace with environment variable.
@@ -516,6 +538,33 @@ And you will get new config like below one
 database:
   host: 127.0.0.1
   port: 9000
+  url: 127.0.0.1:9000
+```
+
+if you won't set environment variable for port, then you will get new config like below one
+
+```yaml
+database:
+  host: 127.0.0.1
+  port: 12345
+  url: 127.0.0.1:12345
+```
+
+> [!NOTE]
+> when you use variable substitution the values can be string in case if you use default variable or env variable, and you need to apply transformer to class fields to get the correct type of the value.
+
+```ts
+export class Config {
+  @IsString()
+  public readonly host!: string;
+
+  @IsNumber()
+  @Type(() => Number)
+  public readonly port!: number;
+
+  @IsString()
+  public readonly url!: string;
+}
 ```
 
 ## Default values
@@ -653,7 +702,7 @@ Suppose we need to inject routing information from the configuration, then we ca
 ```ts
 // config.ts
 import { Type } from 'class-transformer';
-import { IsDefined, IsNumber, IsString } from 'class-validator';
+import { ValidateNested, IsString } from 'class-validator';
 
 export class RouteConfig {
   @IsString()
@@ -661,7 +710,7 @@ export class RouteConfig {
 }
 
 export class RootConfig {
-  @IsDefined()
+  @ValidateNested()
   @Type(() => RouteConfig)
   public readonly route!: RouteConfig;
 }
@@ -724,3 +773,7 @@ Please refer to [changelog.md](https://github.com/Nikaple/nest-typed-config/blob
 ## License
 
 [MIT](LICENSE).
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Nikaple/nest-typed-config&type=Date)](https://star-history.com/#Nikaple/nest-typed-config&Date)

@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](https://semver.org) and [Conventional Commits](https://www.conventionalcommits.org) for commit guidelines.
 
+### [2.9.2](https://github.com/Nikaple/nest-typed-config/compare/v2.9.1...v2.9.2) (2023-12-06)
+
+### 🐛 Fixes
+
+- do not attempt substitution if the loader failed [`3a929bc`](https://github.com/Nikaple/nest-typed-config/commit/3a929bca51a876a2f765367e45cf9a010c2409be).
+
+### [2.9.1](https://github.com/Nikaple/nest-typed-config/compare/v2.9.0...v2.9.1) (2023-10-07)
+
+### 🐛 Fixes
+
+- **deps:** fix lodash.set vulnerability issue [`99cb046`](https://github.com/Nikaple/nest-typed-config/commit/99cb04638bd10719f90a997576a1198dd422f639).
+
+## [2.9.0](https://github.com/Nikaple/nest-typed-config/compare/v2.8.0...v2.9.0) (2023-09-24)
+
+### ✨ Features
+
+- implemented ability to set default values for file loaders, with dotenv-expand syntax [`b39c92c`](https://github.com/Nikaple/nest-typed-config/commit/b39c92c6b6eb823c5eb566f1a0dd60862bd45016).
+
+### 📚 Documentations
+
+- updated documentation for substitution feature [`b7a7563`](https://github.com/Nikaple/nest-typed-config/commit/b7a7563243591e5bd9dd31290cb43230054b744d).
+
+## [2.8.0](https://github.com/Nikaple/nest-typed-config/compare/v2.7.0...v2.8.0) (2023-09-06)
+
+### ✨ Features
+
+- expand values implementation for cosmic file loaders [`e7d77b3`](https://github.com/Nikaple/nest-typed-config/commit/e7d77b3d97ff4f37a80d6fd4d895f0169aaf6171).
+
+## [2.7.0](https://github.com/Nikaple/nest-typed-config/compare/v2.6.0...v2.7.0) (2023-06-30)
+
+### ✨ Features
+
+- trigger ci [`b1d5e72`](https://github.com/Nikaple/nest-typed-config/commit/b1d5e72563cd9bc6c9feddc6b000f29f3d05d127).
+
+## [2.6.0](https://github.com/Nikaple/nest-typed-config/compare/v2.5.2...v2.6.0) (2023-06-06)
+
+### ✨ Features
+
+- **dotenv-loader:** add key transformer option [`1e80f42`](https://github.com/Nikaple/nest-typed-config/commit/1e80f4252e94665806aca1df06411d98fef11707).
+
+  Add option to transform environment variable keys before parsing them.
+  This allows changes to be made prior to parsing which makes having to
+  use complex normalize functions obsolete.
+
+### [2.5.2](https://github.com/Nikaple/nest-typed-config/compare/v2.5.1...v2.5.2) (2023-03-16)
+
+### 🐛 Fixes
+
+- use expand method to expand dotenv config [`e589b7f`](https://github.com/Nikaple/nest-typed-config/commit/e589b7f756f89a9edc6389af7ec8748d8a246fe8).
+
+### [2.5.1](https://github.com/Nikaple/nest-typed-config/compare/v2.5.0...v2.5.1) (2023-02-10)
+
+### 🐛 Fixes
+
+- **ci:** build before release [`6c6a1e2`](https://github.com/Nikaple/nest-typed-config/commit/6c6a1e22e5846077254d911f5bac312aa444852f).
+
+## [2.5.0](https://github.com/Nikaple/nest-typed-config/compare/v2.4.8...v2.5.0) (2023-02-09)
+
+### ✨ Features
+
+- drop Node.js 12.x support [`f7edab2`](https://github.com/Nikaple/nest-typed-config/commit/f7edab2a1724d34a121d279e2f8a441a01090830).
+
+### [2.4.8](https://github.com/Nikaple/nest-typed-config/compare/v2.4.7...v2.4.8) (2023-02-09)
+
+### 🔐 Security Patches
+
+- fixed issue with class-validator dependency cve ([#214](https://github.com/Nikaple/nest-typed-config/issues/214)) [`b12063f`](https://github.com/Nikaple/nest-typed-config/commit/b12063f4fe9bbc651b62aa8832030fd94beb0ad4).
+
+  Co-authored-by: Akatsuki Levi <akatsukilevi@yahoo.co.jp>
+
+### [2.4.7](https://github.com/Nikaple/nest-typed-config/compare/v2.4.6...v2.4.7) (2023-01-02)
+
+### 📚 Documentations
+
+- use `@ValidatedNested` when needed [`2aff0b7`](https://github.com/Nikaple/nest-typed-config/commit/2aff0b7a18eebdd59daafce7ce899d842ff43558).
+
+  closes [#210](https://github.com/Nikaple/nest-typed-config/issues/210);
+
 ### [2.4.6](https://github.com/Nikaple/nest-typed-config/compare/v2.4.5...v2.4.6) (2022-09-06)
 
 ### 🐛 Fixes
