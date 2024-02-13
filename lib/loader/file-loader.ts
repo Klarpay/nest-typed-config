@@ -1,16 +1,10 @@
 import type { OptionsSync } from 'cosmiconfig';
 import { basename, dirname } from 'path';
 import { debug } from '../utils/debug.util';
-import { loadPackage } from '../utils/load-package.util';
-
-let parseToml: any;
-let cosmiconfig: any;
+import { cosmiconfigSync } from 'cosmiconfig';
+import { parse as parseToml } from '@iarna/toml';
 
 const loadToml = function loadToml(filepath: string, content: string) {
-  parseToml = loadPackage(
-    '@iarna/toml',
-    "fileLoader's ability to parse TOML files",
-  ).parse;
   try {
     const result = parseToml(content);
     return result;
@@ -123,9 +117,6 @@ const placeholderResolver = (
 export const fileLoader = (
   options: FileLoaderOptions = {},
 ): (() => Record<string, any>) => {
-  cosmiconfig = loadPackage('cosmiconfig', 'fileLoader');
-
-  const { cosmiconfigSync } = cosmiconfig;
   return (): Record<string, any> => {
     const { searchPlaces, searchFrom } = getSearchOptions(options);
     const loaders = {
